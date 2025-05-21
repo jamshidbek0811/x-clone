@@ -11,20 +11,32 @@ interface Props {
     placeholder: string
     user: IUser
     setPosts: Dispatch<SetStateAction<IPost[]>>
+    postId?: string
+    isComment?: boolean
 }
 
-const Form = ({ placeholder, user, setPosts }: Props) => {
+const Form = ({ placeholder, isComment, postId, user, setPosts }: Props) => {
     const [body, setBody] = useState('')
     const [loading, setLoading] = useState(false)
 
     const onSubmit = async () => {
         try {
           setLoading(true)
-          const { data } = await axios.post('/api/posts', { body, userId: user._id })
-          const newPost = { ...data, user }
-          setPosts((prev) => [newPost, ...prev])
+          if(isComment){
+            const { data } = await axios.post(`/api/comments`, {
+              body: body,
+              userId: user._id,
+              postId
+            })
+
+            const newComment = {...data, user, likes: 0, hasLiked: false }
+            setPosts(prev => [newComment, ...prev])
+          }else {
+            const { data } = await axios.post('/api/posts', { body, userId: user._id })
+            const newPost = { ...data, user, likes: 0, hasLiked: false, comments: 0 }
+            setPosts((prev) => [newPost, ...prev])
+          }
           setBody("")
-          toast({ title: "Succes", description: "Post created succesfully!"})
         } catch (error) {
           toast({ title: "Error", description: "Something went error! Please leter again!", variant: "destructive"})
         } finally {
@@ -52,7 +64,7 @@ const Form = ({ placeholder, user, setPosts }: Props) => {
             <hr className='opacity-0 peer-focus:opacity-100 h-[1px] w-full border-neutral-800 transition' />
             <div className='mt-4 flex flex-row justify-end'>
               <Button 
-                label={"Post"}
+                label={isComment ? "Reply" : "Post"}
                 classNames='px-8'
                 onClick={onSubmit}
                 isLoading={loading}

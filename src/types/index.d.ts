@@ -11,16 +11,16 @@ export interface IUser {
 	location?: string
 	followers?: string[]
 	following?: string[]
-	hasNewNotifications?: boolean
+	hasNewNotification?: boolean
 	notifications?: string[]
 	isFollowing?: boolean
 }
 
 export interface IPost {
 	body: string
-	comments: string[]
+	comments: number
 	createdAt: string
-	likes: string[]
+	likes: number
 	updatedAt: string
 	user: IUser
 	_id: string

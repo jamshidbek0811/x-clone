@@ -6,7 +6,18 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     coverImage: String,
-    profileImage: String
+    profileImage: String,
+    location: String,
+    bio: String,
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User"}],
+    hasNewNotification: Boolean,
+    notifications: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Notification"
+        }
+    ]
 }, { timestamps: true })
 
 const user = mongoose.models.User || mongoose.model("User", userSchema)

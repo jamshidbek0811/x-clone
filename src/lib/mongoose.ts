@@ -20,10 +20,10 @@ export const connectToDatabase = async() => {
             autoCreate: true
         }        
 
-        await mongoose.connect(process.env.MONGODB_URL as string, options)
+        await mongoose.connect(process.env.MONGODB_URL, options)
         isConnected = true
         console.log(`Connected to database succefully!`);
-    } catch (error) {
-        console.log(`Error connected to database!`);
+    } catch (error: any) {
+        console.log(`Error connected to database!`, error.message);
     }
 }

@@ -1,13 +1,13 @@
 "use client"
 
-import { Bell, Home, Search, User } from "lucide-react"
-import { useSession } from "next-auth/react"
+import { Bell, Home, User } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import SidebarItem from "./sidebar-item"
 import SidebarPostButton from "./sidebar-post-button"
 import SidebarAccount from "./sidebar-account"
 import { IUser } from "@/types"
+import { MdOutlineExplore } from "react-icons/md"
 
 const Sidebar = ({ user }: { user: IUser }) => {
 	const sidebarItems = [
@@ -19,12 +19,18 @@ const Sidebar = ({ user }: { user: IUser }) => {
 		{
 			label: "Notifications",
 			path: `/notifications/${user._id}`,
-			icon: Bell
+			icon: Bell,
+			notification: user?.hasNewNotification
 		},
 		{
 			label: "Profile",
 			path: `/profile/${user._id}`,
 			icon: User
+		},
+		{
+			label: "Explore",
+			path: `/explore`,
+			icon: MdOutlineExplore
 		},
 	]
   return (
@@ -37,12 +43,12 @@ const Sidebar = ({ user }: { user: IUser }) => {
 
 			{sidebarItems.map(item => (
 				<Link href={item.path} key={item.label}>
-					<SidebarItem {...item}/>
+					<SidebarItem {...item} />
 				</Link>
 			))}
 			<SidebarPostButton />
 		</div>
-		<SidebarAccount user={user}/>
+		<SidebarAccount user={user} />
 	</section>
   )
 }

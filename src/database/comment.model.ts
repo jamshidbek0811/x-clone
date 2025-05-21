@@ -16,7 +16,7 @@ const commentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
     },
-}, { timestamps: true })
+ }, { timestamps: true })
 
 
 const Post = mongoose.models.Comment || mongoose.model("Comment", commentSchema)

@@ -1,8 +1,8 @@
 import { IUser } from '@/types'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
 import { RiLogoutCircleLine } from 'react-icons/ri'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
-import { MoreHorizontal } from 'lucide-react'
+import { Loader2, MoreHorizontal } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 
 interface Props {
@@ -10,6 +10,13 @@ interface Props {
 }
 
 const SidebarAccount = ({ user }: Props) => {
+	const { data, status } = useSession()
+
+	if(status === "loading") return (
+		<div className="flex justify-center items-center h-24">
+			<Loader2 className="animate-spin text-sky-500" />
+		</div>
+	)
   return (
 	<>
 		<div className='lg:hidden block'>
@@ -21,7 +28,6 @@ const SidebarAccount = ({ user }: Props) => {
 			</div>
 		</div>
 
-		{/* Desktop version */}
 		<Popover>
 		<PopoverTrigger className='w-full rounded-full hover:bg-slate-300 hidden lg:block cursor-pointer hover:bg-opacity-10 px-4 py-2 transition'>
 			<div className='flex justify-between items-center gap-2'>
@@ -31,7 +37,7 @@ const SidebarAccount = ({ user }: Props) => {
 						<AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
 					</Avatar>
 					<div className='flex flex-col items-start text-white'>
-						<p>{user?.name}</p>
+						<p className='text-[14px] flex'>{user?.name}</p>
 						{user?.username ? (
 							<p className='opacity-40'>@{user?.username}</p>
 						) : (

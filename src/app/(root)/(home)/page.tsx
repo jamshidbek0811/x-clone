@@ -27,12 +27,12 @@ const HomePage = () => {
         setLoading(false)
       }
     }
-
     getPosts()
   },[])
+  
   return (
     <>
-      <Header label="Home" isBack />
+      <Header label="Home" />
       {loading || status === "loading" ? (
         <div className=" flex justify-center items-center h-24">
           <Loader2 className="animate-spin text-sky-500"/>
@@ -40,7 +40,7 @@ const HomePage = () => {
       ) : (
         <>
           <Form placeholder="What's happening.." user={JSON.parse(JSON.stringify(session?.user))} setPosts={setPosts}/>
-          {posts.map(post => (
+          {posts.length > 0 && posts.map(post => (
             <PostItem key={post._id} post={post} setPosts={setPosts} user={JSON.parse(JSON.stringify(session?.user))}/>
           ))}
         </>

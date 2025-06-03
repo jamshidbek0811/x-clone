@@ -55,17 +55,17 @@ const LoginModal = () => {
   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 px-8">
     {error && (
       <Alert variant="destructive">
-      <AlertCircle className="h-4 w-4" />
-      <AlertTitle>Error</AlertTitle>
-      <AlertDescription>
-        {error}
-      </AlertDescription>
-    </Alert>
+        <AlertCircle className="h-4 w-4" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          {error}
+        </AlertDescription>
+      </Alert>
     )}
    <FormField
-     control={form.control}
-     name="email"
-     render={({ field }) => (
+        control={form.control}
+        name="email"
+        render={({ field }) => (
        <FormItem>
          <FormLabel>Email</FormLabel>
          <FormControl>

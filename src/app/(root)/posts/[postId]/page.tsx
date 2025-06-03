@@ -11,7 +11,7 @@ import { Loader2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 
-const page = ({ params }: { params: { postId: string }}) => {
+const Page = ({ params }: { params: { postId: string }}) => {
     const { data: session, status } = useSession()
     const [loading, setLoading] = useState(false)
     const [isFetchingComment, setIsFetchingComment] = useState(false)
@@ -92,4 +92,4 @@ const page = ({ params }: { params: { postId: string }}) => {
   )
 }
 
-export default page
+export default Page
